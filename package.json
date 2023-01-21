@@ -19,6 +19,7 @@
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
     "isSameOrAfter": "link:dayjs/plugin/isSameOrAfter",
+    "ora": "^6.1.2",
     "sparkly": "^6.0.0"
   }
 }

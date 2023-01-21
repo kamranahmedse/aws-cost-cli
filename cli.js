@@ -3,14 +3,17 @@ import dayjs from 'dayjs';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
 import Table from 'cli-table3';
+import ora from 'ora';
 
 dotenv.config();
+
+const spinner = ora({ text: '' }).start();
 
 const endDate = dayjs().subtract(1, 'day');
 const startDate = endDate.subtract(65, 'day');
 
 async function getAccountAlias() {
-  console.log('Getting account alias...');
+  spinner.text = 'Getting account alias';
 
   const iam = new AWS.IAM({
     credentials: {
@@ -41,7 +44,7 @@ async function getAccountAlias() {
 }
 
 async function getPricingData() {
-  console.log('Getting pricing data...');
+  spinner.text = 'Getting pricing data';
 
   const costExplorer = new AWS.CostExplorer({
     credentials: {
@@ -95,6 +98,8 @@ async function getPricingData() {
 }
 
 function printData(accountAlias, pricingData) {
+  spinner.text = 'Calculating totals';
+
   const allServices = Object.keys(pricingData).sort((a, b) => b.length - a.length);
 
   // Get the max length of the service names
@@ -109,8 +114,6 @@ function printData(accountAlias, pricingData) {
   const thisMonthHeader = chalk.cyan(`This Month`);
   const last7DaysHeader = chalk.cyan(`Last 7d`);
   const yesterdayHeader = chalk.cyan('Yesterday');
-
-  console.log('');
 
   const table = new Table({
     chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
@@ -178,6 +181,10 @@ function printData(accountAlias, pricingData) {
     chalk.yellowBright(totalYesterday.toFixed(2)),
   ]);
 
+  spinner.stop();
+
+  console.log('');
+  console.log(`AWS Cost Report: ${chalk.bold.yellow(accountAlias)}`);
   console.log(table.toString());
 }
 
