@@ -10,7 +10,7 @@ export default defineConfig([
     splitting: false,
     sourcemap: true,
     minify: false,
-    shims: true,
+    shims: false,
     dts: false,
   },
 ]);
