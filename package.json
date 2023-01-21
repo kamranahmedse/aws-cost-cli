@@ -1,5 +1,5 @@
 {
-  "name": "aws-cost",
+  "name": "aws-cost-cli",
   "version": "0.0.1",
   "description": "Simple CLI to get your AWS costs",
   "type": "module",
@@ -29,15 +29,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kamranahmedse/aws-cost.git"
+    "url": "https://github.com/kamranahmedse/aws-cost-cli.git"
   },
   "engines": {
     "node": ">=12.0"
   },
   "bugs": {
-    "url": "https://github.com/kamranahmedse/aws-cost/issues"
+    "url": "https://github.com/kamranahmedse/aws-cost-cli/issues"
   },
-  "homepage": "https://github.com/kamranahmedse/aws-cost#readme",
+  "homepage": "https://github.com/kamranahmedse/aws-cost-cli#readme",
   "dependencies": {
     "aws-sdk": "^2.1299.0",
     "chalk": "^5.2.0",
