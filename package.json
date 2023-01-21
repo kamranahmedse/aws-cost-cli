@@ -11,6 +11,7 @@
   "files": [
     "!tests/**/*",
     "dist/**/*",
+    "!dist/**/*.js.map",
     "bin/**/*"
   ],
   "bin": {
