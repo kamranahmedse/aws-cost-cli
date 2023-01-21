@@ -1,6 +1,6 @@
 {
   "name": "aws-cost",
-  "version": "0.0.0-dev",
+  "version": "0.0.1",
   "description": "Simple CLI to get your AWS costs",
   "type": "module",
   "author": {
