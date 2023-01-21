@@ -2,8 +2,8 @@ import { Command } from 'commander';
 import dotenv from 'dotenv';
 import { getAccountAlias } from './account';
 import { getAwsCredentials } from './config';
-import { getCosts } from './cost';
-import { printData } from './reporter';
+import { getRawCostByService, getTotalCosts } from './cost';
+import { printBreakdown, printData } from './reporter';
 
 dotenv.config();
 
@@ -21,6 +21,6 @@ program
 const options = program.opts();
 
 const alias = await getAccountAlias(awsConfig);
-const costs = await getCosts(awsConfig);
+const costs = await getTotalCosts(awsConfig);
 
-printData(alias, costs);
+printBreakdown(alias, costs);
