@@ -18,15 +18,23 @@ export function printText(accountAlias: string, totals: TotalCosts) {
   const totalLastMonth = chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`);
   const totalThisMonth = chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`);
   const totalLast7Days = chalk.green(`$${totals.totals.last7Days.toFixed(2)}`);
-  const totalYesterday = chalk.green(`$${totals.totals.yesterday.toFixed(2)}`);
+  const totalYesterday = chalk.bold.yellowBright(
+    `$${totals.totals.yesterday.toFixed(2)}`
+  );
 
   console.log('');
-  console.log(`${'AWS Cost Report:'.padStart(maxServiceLength)} ${chalk.bold.yellow(accountAlias)}`);
+  console.log(
+    `${'AWS Cost Report:'.padStart(maxServiceLength)} ${chalk.bold.yellow(
+      accountAlias
+    )}`
+  );
   console.log('');
   console.log(`${'Last Month'.padStart(maxServiceLength)}: ${totalLastMonth}`);
   console.log(`${'This Month'.padStart(maxServiceLength)}: ${totalThisMonth}`);
   console.log(`${'Last 7 days'.padStart(maxServiceLength)}: ${totalLast7Days}`);
-  console.log(`${'Yesterday'.padStart(maxServiceLength)}: ${totalYesterday}`);
+  console.log(
+    `${chalk.bold('Yesterday'.padStart(maxServiceLength))}: ${totalYesterday}`
+  );
   console.log('');
 
   const headerPadLength = 11;
@@ -34,8 +42,8 @@ export function printText(accountAlias: string, totals: TotalCosts) {
   const serviceHeader = chalk.white('Service'.padStart(maxServiceLength));
   const lastMonthHeader = chalk.white(`Last Month`.padEnd(headerPadLength));
   const thisMonthHeader = chalk.white(`This Month`.padEnd(headerPadLength));
-  const last7DaysHeader = chalk.white(`Last 7d`.padEnd(headerPadLength));
-  const yesterdayHeader = chalk.white('Yesterday'.padEnd(headerPadLength));
+  const last7DaysHeader = chalk.white(`Last 7 Days`.padEnd(headerPadLength));
+  const yesterdayHeader = chalk.bold.white('Yesterday'.padEnd(headerPadLength));
 
   console.log(
     `${serviceHeader} ${lastMonthHeader} ${thisMonthHeader} ${last7DaysHeader} ${yesterdayHeader}`
@@ -58,7 +66,7 @@ export function printText(accountAlias: string, totals: TotalCosts) {
         headerPadLength
       )
     );
-    const yesterdayTotal = chalk.green(
+    const yesterdayTotal = chalk.bold.yellowBright(
       `$${totals.totalsByService.yesterday[service].toFixed(2)}`.padEnd(
         headerPadLength
       )
