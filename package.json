@@ -25,7 +25,16 @@
     "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "aws",
+    "cost",
+    "cli",
+    "aws-cost",
+    "aws-cost-cli",
+    "aws-costs",
+    "typescript",
+    "aws cli"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
