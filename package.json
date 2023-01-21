@@ -1,6 +1,6 @@
 {
   "name": "aws-cost-cli",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Simple CLI to get your AWS costs",
   "type": "module",
   "author": {
@@ -51,13 +51,10 @@
   "dependencies": {
     "aws-sdk": "^2.1299.0",
     "chalk": "^5.2.0",
-    "cli-spinners": "^2.7.0",
-    "cli-table3": "^0.6.3",
     "commander": "^10.0.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
-    "ora": "^6.1.2",
-    "update-notifier": "^6.0.2"
+    "ora": "^6.1.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
