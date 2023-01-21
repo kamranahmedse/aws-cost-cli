@@ -8,14 +8,6 @@ import { printPlainText } from './printers/text';
 import { printFancy } from './printers/fancy';
 import packageJson from '../package.json' assert { type: 'json' };
 
-type OptionsType = {
-  config: string;
-  text: boolean;
-  json: boolean;
-  help: boolean;
-  summary: boolean;
-};
-
 updateNotifier({ pkg: packageJson }).notify();
 
 const program = new Command();
@@ -32,6 +24,13 @@ program
   .option('-h, --help', 'Get the help of the CLI')
   .parse(process.argv);
 
+type OptionsType = {
+  config: string;
+  text: boolean;
+  json: boolean;
+  help: boolean;
+  summary: boolean;
+};
 const options = program.opts<OptionsType>();
 
 if (options.help) {
