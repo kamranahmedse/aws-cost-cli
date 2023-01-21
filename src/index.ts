@@ -1,14 +1,11 @@
 import { Command } from 'commander';
-import updateNotifier from 'update-notifier';
+import packageJson from '../package.json' assert { type: 'json' };
 import { getAccountAlias } from './account';
 import { getAwsCredentials, loadConfig } from './config';
 import { getTotalCosts } from './cost';
+import { printFancy } from './printers/fancy';
 import { printJson } from './printers/json';
 import { printPlainText } from './printers/text';
-import { printFancy } from './printers/fancy';
-import packageJson from '../package.json' assert { type: 'json' };
-
-updateNotifier({ pkg: packageJson }).notify();
 
 const program = new Command();
 
