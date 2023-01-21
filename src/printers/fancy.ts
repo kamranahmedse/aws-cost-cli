@@ -53,7 +53,7 @@ export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: 
       `$${totals.totalsByService.lastMonth[service].toFixed(2)}`,
       `$${totals.totalsByService.thisMonth[service].toFixed(2)}`,
       `$${totals.totalsByService.last7Days[service].toFixed(2)}`,
-      `$${totals.totalsByService.yesterday[service].toFixed(2)}`,
+      chalk.yellow(`$${totals.totalsByService.yesterday[service].toFixed(2)}`),
     ]);
   }
 
@@ -62,7 +62,7 @@ export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: 
     chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`),
     chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`),
     chalk.green(`$${totals.totals.last7Days.toFixed(2)}`),
-    chalk.green(`$${totals.totals.yesterday.toFixed(2)}`),
+    chalk.yellow.bold(`$${totals.totals.yesterday.toFixed(2)}`),
   ]);
 
   hideSpinner();

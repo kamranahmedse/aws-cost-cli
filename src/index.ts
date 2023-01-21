@@ -28,8 +28,8 @@ program
   .version(packageJson.version)
   .name(packageJson.name)
   .description(packageJson.description)
-  .option('-f, --fancy', 'Get the output as a fancy table', true)
-  .option('-t, --text', 'Get the output as text')
+  .option('-t, --text', 'Get the output as text', true)
+  .option('-f, --fancy', 'Get the output as a fancy table')
   .option('-j, --json', 'Get the output as JSON')
   .option('-s, --summary', 'Get only the summary without service breakdown')
   .option('-p, --plain', 'Get the output as plain text (no colors / tables)')
@@ -49,10 +49,10 @@ const costs = await getTotalCosts(awsConfig);
 
 if (options.json) {
   printJson(alias, costs, options.summary);
-} else if (options.text) {
-  printText(alias, costs, options.summary);
+} else if (options.fancy) {
+  printFancy(alias, costs, options.summary);
 } else if (options.plain) {
   printPlainText(alias, costs, options.summary);
 } else {
-  printFancy(alias, costs, options.summary);
+  printText(alias, costs, options.summary);
 }

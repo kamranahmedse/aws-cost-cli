@@ -1,5 +1,5 @@
 {
-  "name": "aws-cost-cli",
+  "name": "aws-cost",
   "version": "0.0.0-dev",
   "description": "Simple CLI to get your AWS costs",
   "type": "module",
@@ -14,7 +14,7 @@
     "bin/**/*"
   ],
   "bin": {
-    "aws-cost-cli": "./bin/index.js"
+    "aws-cost": "./bin/index.js"
   },
   "scripts": {
     "build": "tsup",
@@ -29,15 +29,15 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kamranahmedse/aws-cost-cli.git"
+    "url": "https://github.com/kamranahmedse/aws-cost.git"
   },
   "engines": {
     "node": ">=12.0"
   },
   "bugs": {
-    "url": "https://github.com/kamranahmedse/aws-cost-cli/issues"
+    "url": "https://github.com/kamranahmedse/aws-cost/issues"
   },
-  "homepage": "https://github.com/kamranahmedse/aws-cost-cli#readme",
+  "homepage": "https://github.com/kamranahmedse/aws-cost#readme",
   "dependencies": {
     "aws-sdk": "^2.1299.0",
     "chalk": "^5.2.0",
