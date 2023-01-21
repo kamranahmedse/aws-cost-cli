@@ -3,7 +3,9 @@ import dotenv from 'dotenv';
 import { getAccountAlias } from './account';
 import { getAwsCredentials } from './config';
 import { getTotalCosts } from './cost';
-import { printJson, printTable, printText } from './reporter';
+import { printText } from './printers/text';
+import { printJson } from './printers/json';
+import { printFancy } from './printers/fancy';
 
 type OptionsType = {
   text: boolean;
@@ -45,5 +47,5 @@ if (options.json) {
 } else if (options.text) {
   printText(alias, costs);
 } else {
-  printTable(alias, costs);
+  printFancy(alias, costs);
 }
