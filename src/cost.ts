@@ -1,7 +1,7 @@
 import AWS from 'aws-sdk';
 import dayjs from 'dayjs';
 import { AWSConfig } from './config';
-import { showSpinner } from './reporter';
+import { showSpinner } from './spinner';
 
 export type RawCostByService = {
   [key: string]: {
