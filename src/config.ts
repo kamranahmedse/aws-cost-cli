@@ -1,4 +1,33 @@
-import AWS from 'aws-sdk';
+import dotenv from 'dotenv';
+import fs from 'node:fs';
+import { env } from 'node:process';
+
+/**
+ * Loads the environment variables from the .env file
+ * @param path Path to the .env file
+ */
+export function loadEnv(path: string = undefined) {
+  if (typeof path === 'boolean') {
+    console.error('Invalid path to the config file');
+    process.exit(1);
+  }
+
+  if (!path) {
+    dotenv.config();
+    return;
+  }
+
+  if (!fs.existsSync(path)) {
+    console.error(`Config file not found: ${path}`);
+    process.exit(1);
+  }
+
+  dotenv.config({ path: path });
+
+  const envConfig = readEnvConfig();
+  console.log(process.env);
+  process.exit(0);
+}
 
 export type EnvConfig = {
   awsAccessKey: string;
@@ -34,14 +63,8 @@ export type AWSConfig = {
 export function getAwsCredentials(): AWSConfig {
   const envConfig = readEnvConfig();
 
-  if (
-    !envConfig.awsAccessKey ||
-    !envConfig.awsSecretKey ||
-    !envConfig.awsRegion
-  ) {
-    throw new Error(
-      'Missing AWS credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION'
-    );
+  if (!envConfig.awsAccessKey || !envConfig.awsSecretKey || !envConfig.awsRegion) {
+    throw new Error('Missing AWS credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION');
   }
 
   return {

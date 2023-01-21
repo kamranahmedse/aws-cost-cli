@@ -1,73 +1,62 @@
 import chalk from 'chalk';
-import Table from 'cli-table3';
 import { TotalCosts } from '../cost';
 import { hideSpinner } from '../spinner';
 
-function printSummary(accountAlias: string, totals: TotalCosts) {
-  hideSpinner();
-  console.clear();
-  console.log('');
-  console.log(`AWS Cost Report: ${chalk.bold.yellow(accountAlias)}`);
-
-  const table = new Table({
-    chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
-    head: [chalk.cyanBright('Period'), chalk.cyanBright('Cost')],
-    style: { head: ['bold'] },
-  });
-
-  table.push([chalk.cyan('Last Month'), chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`)]);
-  table.push([chalk.cyan('This Month'), chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`)]);
-  table.push([chalk.cyan('Last 7 Days'), chalk.green(`$${totals.totals.last7Days.toFixed(2)}`)]);
-  table.push([chalk.cyanBright('Yesterday'), chalk.yellowBright.bold(`$${totals.totals.yesterday.toFixed(2)}`)]);
-
-  console.log(table.toString());
-}
-
 export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: boolean = false) {
-  if (isSummary) {
-    return printSummary(accountAlias, totals);
-  }
-
-  const allServices = Object.keys(totals.totalsByService.lastMonth).sort((a, b) => b.length - a.length);
-
-  // Get the max length of the service names
-  // This is used to align the columns
-  const maxServiceLength = allServices.reduce((max, service) => {
-    return Math.max(max, service.length);
-  }, 0);
-
-  const serviceHeader = chalk.cyan('Service'.padStart(maxServiceLength));
-  const lastMonthHeader = chalk.cyan(`Last Month`);
-  const thisMonthHeader = chalk.cyan(`This Month`);
-  const last7DaysHeader = chalk.cyan(`Last 7d`);
-  const yesterdayHeader = chalk.cyan('Yesterday');
-
-  const table = new Table({
-    chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
-    head: [serviceHeader, lastMonthHeader, thisMonthHeader, last7DaysHeader, yesterdayHeader],
-  });
-
-  for (const service of allServices) {
-    table.push([
-      chalk.cyan(service.padStart(maxServiceLength)),
-      `$${totals.totalsByService.lastMonth[service].toFixed(2)}`,
-      `$${totals.totalsByService.thisMonth[service].toFixed(2)}`,
-      `$${totals.totalsByService.last7Days[service].toFixed(2)}`,
-      chalk.yellow(`$${totals.totalsByService.yesterday[service].toFixed(2)}`),
-    ]);
-  }
-
-  table.push([
-    chalk.cyan('Total'.padStart(maxServiceLength)),
-    chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`),
-    chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`),
-    chalk.green(`$${totals.totals.last7Days.toFixed(2)}`),
-    chalk.yellow.bold(`$${totals.totals.yesterday.toFixed(2)}`),
-  ]);
-
   hideSpinner();
   console.clear();
+
+  const allServices = Object.keys(totals.totalsByService.lastMonth);
+  const sortedServiceNames = allServices.sort((a, b) => b.length - a.length);
+
+  const maxServiceLength =
+    sortedServiceNames.reduce((max, service) => {
+      return Math.max(max, service.length);
+    }, 0) + 1;
+
+  const totalLastMonth = chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`);
+  const totalThisMonth = chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`);
+  const totalLast7Days = chalk.green(`$${totals.totals.last7Days.toFixed(2)}`);
+  const totalYesterday = chalk.bold.yellowBright(`$${totals.totals.yesterday.toFixed(2)}`);
+
   console.log('');
-  console.log(`AWS Cost Report: ${chalk.bold.yellow(accountAlias)}`);
-  console.log(table.toString());
+  console.log(`${'AWS Cost Report:'.padStart(maxServiceLength + 1)} ${chalk.bold.yellow(accountAlias)}`);
+  console.log('');
+  console.log(`${'Last Month'.padStart(maxServiceLength)}: ${totalLastMonth}`);
+  console.log(`${'This Month'.padStart(maxServiceLength)}: ${totalThisMonth}`);
+  console.log(`${'Last 7 days'.padStart(maxServiceLength)}: ${totalLast7Days}`);
+  console.log(`${chalk.bold('Yesterday'.padStart(maxServiceLength))}: ${totalYesterday}`);
+  console.log('');
+
+  if (isSummary) {
+    return;
+  }
+
+  const headerPadLength = 11;
+
+  const serviceHeader = chalk.white('Service'.padStart(maxServiceLength));
+  const lastMonthHeader = chalk.white(`Last Month`.padEnd(headerPadLength));
+  const thisMonthHeader = chalk.white(`This Month`.padEnd(headerPadLength));
+  const last7DaysHeader = chalk.white(`Last 7 Days`.padEnd(headerPadLength));
+  const yesterdayHeader = chalk.bold.white('Yesterday'.padEnd(headerPadLength));
+
+  console.log(`${serviceHeader} ${lastMonthHeader} ${thisMonthHeader} ${last7DaysHeader} ${yesterdayHeader}`);
+
+  for (let service of sortedServiceNames) {
+    const serviceLabel = chalk.cyan(service.padStart(maxServiceLength));
+    const lastMonthTotal = chalk.green(
+      `$${totals.totalsByService.lastMonth[service].toFixed(2)}`.padEnd(headerPadLength)
+    );
+    const thisMonthTotal = chalk.green(
+      `$${totals.totalsByService.thisMonth[service].toFixed(2)}`.padEnd(headerPadLength)
+    );
+    const last7DaysTotal = chalk.green(
+      `$${totals.totalsByService.last7Days[service].toFixed(2)}`.padEnd(headerPadLength)
+    );
+    const yesterdayTotal = chalk.bold.yellowBright(
+      `$${totals.totalsByService.yesterday[service].toFixed(2)}`.padEnd(headerPadLength)
+    );
+
+    console.log(`${serviceLabel} ${lastMonthTotal} ${thisMonthTotal} ${last7DaysTotal} ${yesterdayTotal}`);
+  }
 }
