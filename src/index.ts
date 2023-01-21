@@ -1,15 +1,14 @@
-import figlet from 'figlet';
 import { Command } from 'commander';
 import dotenv from 'dotenv';
-import { AWSConfig, getAwsConiguration } from './config';
 import { getAccountAlias } from './account';
-import { hideSpinner, printData } from './reporter';
+import { getAwsCredentials } from './config';
 import { getCosts } from './cost';
+import { printData } from './reporter';
 
 dotenv.config();
 
 const packageJson = require('../package.json');
-const awsConfig: AWSConfig = getAwsConiguration();
+const awsConfig = getAwsCredentials();
 
 const program = new Command();
 
