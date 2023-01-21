@@ -56,7 +56,8 @@
     "commander": "^10.0.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
-    "ora": "^6.1.2"
+    "ora": "^6.1.2",
+    "update-notifier": "^6.0.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.18",
