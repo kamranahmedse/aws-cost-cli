@@ -1,0 +1,2 @@
+# Set the repository to show as TypeScript rather than JS in GitHub
+*.js linguist-detectable=false

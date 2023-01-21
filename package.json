@@ -2,24 +2,39 @@
   "name": "aws-cost",
   "version": "1.0.0",
   "description": "",
-  "type": "module",
   "main": "index.js",
   "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "lint": "eslint ./src/ --fix",
+    "start": "ts-node ./src/index.ts",
+    "typecheck": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "aws-sdk": "^2.1299.0",
     "chalk": "^5.2.0",
     "cli-table3": "^0.6.3",
-    "collections": "^5.1.13",
-    "datetime-js": "^4.0.0",
+    "commander": "^10.0.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
-    "isSameOrAfter": "link:dayjs/plugin/isSameOrAfter",
-    "ora": "^6.1.2",
-    "sparkly": "^6.0.0"
+    "ora": "^6.1.2"
+  },
+  "devDependencies": {
+    "@types/figlet": "^1.5.5",
+    "@types/node": "^18.11.18",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.32.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "figlet": "^1.5.2",
+    "prettier": "^2.8.3",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.4"
   }
 }
