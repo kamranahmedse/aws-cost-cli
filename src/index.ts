@@ -1,6 +1,6 @@
 import { Command } from 'commander';
 import { getAccountAlias } from './account';
-import { getAwsCredentials, loadEnv } from './config';
+import { getAwsCredentials, loadConfig } from './config';
 import { getTotalCosts } from './cost';
 import { printJson } from './printers/json';
 import { printPlainText } from './printers/text';
@@ -37,7 +37,7 @@ if (options.help) {
   process.exit(0);
 }
 
-loadEnv(options.config);
+loadConfig(options.config);
 
 const awsConfig = getAwsCredentials();
 

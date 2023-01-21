@@ -6,7 +6,7 @@ import { env } from 'node:process';
  * Loads the environment variables from the .env file
  * @param path Path to the .env file
  */
-export function loadEnv(path: string = undefined) {
+export function loadConfig(path: string = undefined) {
   if (typeof path === 'boolean') {
     console.error('Invalid path to the config file');
     process.exit(1);
@@ -14,19 +14,20 @@ export function loadEnv(path: string = undefined) {
 
   if (!path) {
     dotenv.config();
-    return;
-  }
+  } else {
+    if (!fs.existsSync(path)) {
+      console.error(`Config file not found: ${path}`);
+      process.exit(1);
+    }
 
-  if (!fs.existsSync(path)) {
-    console.error(`Config file not found: ${path}`);
-    process.exit(1);
+    dotenv.config({ path: path });
   }
-
-  dotenv.config({ path: path });
 
   const envConfig = readEnvConfig();
-  console.log(process.env);
-  process.exit(0);
+  if (!envConfig.awsAccessKey || !envConfig.awsSecretKey || !envConfig.awsRegion) {
+    console.error('Missing AWS credentials: AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_REGION');
+    process.exit(1);
+  }
 }
 
 export type EnvConfig = {
