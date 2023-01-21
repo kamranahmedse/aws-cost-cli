@@ -1,5 +1,5 @@
 ## aws-cost-cli
-> A CLI tool to perform cost analysis on your AWS account
+> CLI tool to perform cost analysis on your AWS account
 
 [![asciicast](https://asciinema.org/a/553356.svg?up=1)](https://asciinema.org/a/553356)
 
