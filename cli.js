@@ -100,7 +100,9 @@ async function getPricingData() {
 function printData(accountAlias, pricingData) {
   spinner.text = 'Calculating totals';
 
-  const allServices = Object.keys(pricingData).sort((a, b) => b.length - a.length);
+  const allServices = Object.keys(pricingData).sort(
+    (a, b) => b.length - a.length
+  );
 
   // Get the max length of the service names
   // This is used to align the columns
@@ -117,7 +119,13 @@ function printData(accountAlias, pricingData) {
 
   const table = new Table({
     chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
-    head: [serviceHeader, lastMonthHeader, thisMonthHeader, last7DaysHeader, yesterdayHeader],
+    head: [
+      serviceHeader,
+      lastMonthHeader,
+      thisMonthHeader,
+      last7DaysHeader,
+      yesterdayHeader,
+    ],
   });
 
   let totalLastMonth = 0;
@@ -150,7 +158,10 @@ function printData(accountAlias, pricingData) {
         thisMonthServiceTotal += price;
       }
 
-      if (dateObj.isSame(startOfLast7Days, 'week') && !dateObj.isSame(startOfYesterday, 'day')) {
+      if (
+        dateObj.isSame(startOfLast7Days, 'week') &&
+        !dateObj.isSame(startOfYesterday, 'day')
+      ) {
         last7DaysServiceTotal += price;
       }
 
@@ -165,7 +176,13 @@ function printData(accountAlias, pricingData) {
     const last7DaysValue = last7DaysServiceTotal.toFixed(2);
     const yesterdayValue = yesterdayServiceTotal.toFixed(2);
 
-    table.push([serviceValue, lastMonthValue, thisMonthValue, last7DaysValue, yesterdayValue]);
+    table.push([
+      serviceValue,
+      lastMonthValue,
+      thisMonthValue,
+      last7DaysValue,
+      yesterdayValue,
+    ]);
 
     totalLastMonth += lastMonthServiceTotal;
     totalThisMonth += thisMonthServiceTotal;
@@ -196,7 +213,7 @@ async function runner() {
 }
 
 runner()
-  .then((data) => {})
-  .catch((err) => {
+  .then(data => {})
+  .catch(err => {
     console.log(err);
   });

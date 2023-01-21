@@ -3,7 +3,8 @@ import { Command } from 'commander';
 import dotenv from 'dotenv';
 import { AWSConfig, getAwsConiguration } from './config';
 import { getAccountAlias } from './account';
-import { hideSpinner } from './reporter';
+import { hideSpinner, printData } from './reporter';
+import { getCosts } from './cost';
 
 dotenv.config();
 
@@ -21,7 +22,6 @@ program
 const options = program.opts();
 
 const alias = await getAccountAlias(awsConfig);
+const costs = await getCosts(awsConfig);
 
-hideSpinner();
-
-console.log(alias);
+printData(alias, costs);
