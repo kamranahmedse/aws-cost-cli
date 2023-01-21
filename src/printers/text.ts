@@ -3,7 +3,11 @@ import Table from 'cli-table3';
 import { TotalCosts } from '../cost';
 import { hideSpinner } from '../spinner';
 
-export function printText(accountAlias: string, totals: TotalCosts) {
+export function printText(
+  accountAlias: string,
+  totals: TotalCosts,
+  isSummary: boolean = false
+) {
   hideSpinner();
   console.clear();
 
@@ -24,7 +28,7 @@ export function printText(accountAlias: string, totals: TotalCosts) {
 
   console.log('');
   console.log(
-    `${'AWS Cost Report:'.padStart(maxServiceLength)} ${chalk.bold.yellow(
+    `${'AWS Cost Report:'.padStart(maxServiceLength + 1)} ${chalk.bold.yellow(
       accountAlias
     )}`
   );
@@ -36,6 +40,10 @@ export function printText(accountAlias: string, totals: TotalCosts) {
     `${chalk.bold('Yesterday'.padStart(maxServiceLength))}: ${totalYesterday}`
   );
   console.log('');
+
+  if (isSummary) {
+    return;
+  }
 
   const headerPadLength = 11;
 

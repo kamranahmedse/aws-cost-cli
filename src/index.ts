@@ -6,12 +6,15 @@ import { getTotalCosts } from './cost';
 import { printText } from './printers/text';
 import { printJson } from './printers/json';
 import { printFancy } from './printers/fancy';
+import { printPlainText } from './printers/plain';
 
 type OptionsType = {
   text: boolean;
   json: boolean;
   fancy: boolean;
+  plain: boolean;
   help: boolean;
+  summary: boolean;
 };
 
 dotenv.config();
@@ -28,6 +31,8 @@ program
   .option('-f, --fancy', 'Get the output as a fancy table', true)
   .option('-t, --text', 'Get the output as text')
   .option('-j, --json', 'Get the output as JSON')
+  .option('-s, --summary', 'Get only the summary without service breakdown')
+  .option('-p, --plain', 'Get the output as plain text (no colors / tables)')
   .option('-v, --version', 'Get the version of the CLI')
   .option('-h, --help', 'Get the help of the CLI')
   .parse(process.argv);
@@ -43,9 +48,11 @@ const alias = await getAccountAlias(awsConfig);
 const costs = await getTotalCosts(awsConfig);
 
 if (options.json) {
-  printJson(alias, costs);
+  printJson(alias, costs, options.summary);
 } else if (options.text) {
-  printText(alias, costs);
+  printText(alias, costs, options.summary);
+} else if (options.plain) {
+  printPlainText(alias, costs, options.summary);
 } else {
-  printFancy(alias, costs);
+  printFancy(alias, costs, options.summary);
 }

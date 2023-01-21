@@ -1,13 +1,33 @@
 import { TotalCosts } from '../cost';
 import { hideSpinner } from '../spinner';
 
-export function printJson(accountAlias: string, totals: TotalCosts) {
+export function printJson(
+  accountAlias: string,
+  totalCosts: TotalCosts,
+  isSummary = false
+) {
   hideSpinner();
+
+  if (isSummary) {
+    console.log(
+      JSON.stringify(
+        {
+          account: accountAlias,
+          totals: totalCosts.totals,
+        },
+        null,
+        2
+      )
+    );
+
+    return;
+  }
+
   console.log(
     JSON.stringify(
       {
         account: accountAlias,
-        totals,
+        ...totalCosts,
       },
       null,
       2

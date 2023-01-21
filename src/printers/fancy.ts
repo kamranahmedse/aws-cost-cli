@@ -3,10 +3,32 @@ import Table from 'cli-table3';
 import { TotalCosts } from '../cost';
 import { hideSpinner } from '../spinner';
 
-export function printFancy(accountAlias: string, totals: TotalCosts) {
-  const allServices = Object.keys(totals.totalsByService.lastMonth).sort(
-    (a, b) => b.length - a.length
-  );
+function printSummary(accountAlias: string, totals: TotalCosts) {
+  hideSpinner();
+  console.clear();
+  console.log('');
+  console.log(`AWS Cost Report: ${chalk.bold.yellow(accountAlias)}`);
+
+  const table = new Table({
+    chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
+    head: [chalk.cyanBright('Period'), chalk.cyanBright('Cost')],
+    style: { head: ['bold'] },
+  });
+
+  table.push([chalk.cyan('Last Month'), chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`)]);
+  table.push([chalk.cyan('This Month'), chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`)]);
+  table.push([chalk.cyan('Last 7 Days'), chalk.green(`$${totals.totals.last7Days.toFixed(2)}`)]);
+  table.push([chalk.cyanBright('Yesterday'), chalk.yellowBright.bold(`$${totals.totals.yesterday.toFixed(2)}`)]);
+
+  console.log(table.toString());
+}
+
+export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: boolean = false) {
+  if (isSummary) {
+    return printSummary(accountAlias, totals);
+  }
+
+  const allServices = Object.keys(totals.totalsByService.lastMonth).sort((a, b) => b.length - a.length);
 
   // Get the max length of the service names
   // This is used to align the columns
@@ -22,13 +44,7 @@ export function printFancy(accountAlias: string, totals: TotalCosts) {
 
   const table = new Table({
     chars: { mid: '', 'left-mid': '', 'mid-mid': '', 'right-mid': '' },
-    head: [
-      serviceHeader,
-      lastMonthHeader,
-      thisMonthHeader,
-      last7DaysHeader,
-      yesterdayHeader,
-    ],
+    head: [serviceHeader, lastMonthHeader, thisMonthHeader, last7DaysHeader, yesterdayHeader],
   });
 
   for (const service of allServices) {
