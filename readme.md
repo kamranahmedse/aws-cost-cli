@@ -1,6 +1,8 @@
 ## aws-cost-cli
 > A CLI tool to perform cost analysis on your AWS account
 
+![aws-cost-cli](https://raw.githubusercontent.com/kamranahmedse/aws-cost-cli/master/assets/aws-cost-cli.png)
+
 ## Usage
 
 Install the package globally or alternatively use `npx`
