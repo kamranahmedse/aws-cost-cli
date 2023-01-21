@@ -1,0 +1,7 @@
+.idea
+.DS_Store
+.vscode
+.env
+node_modules
+pnpm-debug.log
+pnpm-error.log

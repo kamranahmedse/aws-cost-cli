@@ -1,0 +1,24 @@
+{
+  "name": "aws-cost",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1299.0",
+    "chalk": "^5.2.0",
+    "cli-table3": "^0.6.3",
+    "collections": "^5.1.13",
+    "datetime-js": "^4.0.0",
+    "dayjs": "^1.11.7",
+    "dotenv": "^16.0.3",
+    "isSameOrAfter": "link:dayjs/plugin/isSameOrAfter",
+    "sparkly": "^6.0.0"
+  }
+}
