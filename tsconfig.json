@@ -1,13 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "strict": true,
-    "outDir": "dist/",
-    "esModuleInterop": true,
+    "target": "es2020",
+    "lib": ["esnext"],
+    "allowJs": true,
     "skipLibCheck": true,
-    "declaration": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "outDir": "dist",
+    "noEmit": true
   },
-  "include": ["src/**/*.ts"]
+  "exclude": ["node_modules", "dist"],
+  "include": ["**/*.ts"]
 }
