@@ -5,6 +5,7 @@ import { getAwsConfigFromOptionsOrFile } from './config';
 import { getTotalCosts } from './cost';
 import { printFancy } from './printers/fancy';
 import { printJson } from './printers/json';
+import { notifySlack } from './printers/slack';
 import { printPlainText } from './printers/text';
 
 const program = new Command();
@@ -22,6 +23,9 @@ program
   .option('-j, --json', 'Get the output as JSON')
   .option('-s, --summary', 'Get only the summary without service breakdown')
   .option('-t, --text', 'Get the output as plain text (no colors / tables)')
+  // Slack integration
+  .option('-S, --slack-token [token]', 'Token for the slack integration')
+  .option('-C, --slack-channel [channel]', 'Channel to which the slack integration should post')
   // Other options
   .option('-v, --version', 'Get the version of the CLI')
   .option('-h, --help', 'Get the help of the CLI')
@@ -38,6 +42,9 @@ type OptionsType = {
   text: boolean;
   json: boolean;
   summary: boolean;
+  // Slack token
+  slackToken: string;
+  slackChannel: string;
   // Other options
   help: boolean;
 };
@@ -65,4 +72,9 @@ if (options.json) {
   printPlainText(alias, costs, options.summary);
 } else {
   printFancy(alias, costs, options.summary);
+}
+
+// Send a notification to slack if the token and channel are provided
+if (options.slackToken && options.slackChannel) {
+  await notifySlack(alias, costs, options.slackToken, options.slackChannel);
 }
