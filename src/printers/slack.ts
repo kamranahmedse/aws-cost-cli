@@ -15,7 +15,7 @@ function formatServiceBreakdown(costs: TotalCosts): string {
     .sort((a, b) => serviceCosts.yesterday[b] - serviceCosts.yesterday[a]);
 
   const serviceCostsYesterday = sortedServices.map((service) => {
-    return `${service}: \`$${serviceCosts.yesterday[service].toFixed(2)}\``;
+    return `> ${service}: \`$${serviceCosts.yesterday[service].toFixed(2)}\``;
   });
 
   return serviceCostsYesterday.join('\n');
@@ -33,14 +33,14 @@ export async function notifySlack(accountAlias: string, costs: TotalCosts, slack
     serviceCostsYesterday.push(`${service}: $${serviceCosts.yesterday[service].toFixed(2)}`);
   });
 
-  const summary = `*Account: ${accountAlias}*
+  const summary = `> *Account: ${accountAlias}*
 
-> Summary 
-Total Yesterday: \`$${totals.yesterday.toFixed(2)}\`
-Total This Month: \`$${totals.thisMonth.toFixed(2)}\`
-Total Last Month: \`$${totals.lastMonth.toFixed(2)}\`
+> *Summary *
+> Total Yesterday: \`$${totals.yesterday.toFixed(2)}\`
+> Total This Month: \`$${totals.thisMonth.toFixed(2)}\`
+> Total Last Month: \`$${totals.lastMonth.toFixed(2)}\`
 
-> Breakdown by Service:
+> *Breakdown by Service:*
 ${formatServiceBreakdown(costs)}
 `;
 
