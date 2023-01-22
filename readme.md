@@ -161,6 +161,10 @@ aws-cost --json
 aws-cost --slack-token [token] --slack-channel [channel]
 ```
 
+You will get the message on slack with the breakdown:
+
+![Slack Usage](./.github/images/slack-usage.png)
+
 ## Note
 
 Regarding the credentials, you need to have the following permissions in order to use the CLI:
