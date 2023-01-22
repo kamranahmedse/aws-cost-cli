@@ -1,5 +1,5 @@
 import { TotalCosts } from '../cost';
-import { hideSpinner } from '../spinner';
+import { hideSpinner } from '../logger';
 
 export function printJson(
   accountAlias: string,

@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import { AWSConfig } from './config';
-import { showSpinner } from './spinner';
+import { showSpinner } from './logger';
 
 export async function getAccountAlias(awsConfig: AWSConfig): Promise<string> {
   showSpinner('Getting account alias');

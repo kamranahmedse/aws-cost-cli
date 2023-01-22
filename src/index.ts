@@ -1,7 +1,7 @@
 import { Command } from 'commander';
 import packageJson from '../package.json' assert { type: 'json' };
 import { getAccountAlias } from './account';
-import { getAwsCredentials, loadConfig } from './config';
+import { getAwsConfigFromOptionsOrFile } from './config';
 import { getTotalCosts } from './cost';
 import { printFancy } from './printers/fancy';
 import { printJson } from './printers/json';
@@ -11,23 +11,37 @@ const program = new Command();
 
 program
   .version(packageJson.version)
-  .name(packageJson.name)
+  .name('aws-cost')
   .description(packageJson.description)
-  .option('-c, --config [path]', 'Path to the config file')
+  .option('-p, --profile [profile]', 'AWS profile to use', 'default')
+  // AWS credentials to override reading from the config files
+  .option('-k, --access-key [key]', 'AWS access key')
+  .option('-s, --secret-key [key]', 'AWS secret key')
+  .option('-r, --region [region]', 'AWS region')
+  // Output variants
   .option('-j, --json', 'Get the output as JSON')
   .option('-s, --summary', 'Get only the summary without service breakdown')
   .option('-t, --text', 'Get the output as plain text (no colors / tables)')
+  // Other options
   .option('-v, --version', 'Get the version of the CLI')
   .option('-h, --help', 'Get the help of the CLI')
   .parse(process.argv);
 
 type OptionsType = {
-  config: string;
+  // AWS credentials to override reading from the config files
+  accessKey: string;
+  secretKey: string;
+  region: string;
+  // AWS profile to use
+  profile: string;
+  // Output variants
   text: boolean;
   json: boolean;
-  help: boolean;
   summary: boolean;
+  // Other options
+  help: boolean;
 };
+
 const options = program.opts<OptionsType>();
 
 if (options.help) {
@@ -35,9 +49,12 @@ if (options.help) {
   process.exit(0);
 }
 
-loadConfig(options.config);
-
-const awsConfig = getAwsCredentials();
+const awsConfig = await getAwsConfigFromOptionsOrFile({
+  profile: options.profile,
+  accessKey: options.accessKey,
+  secretKey: options.secretKey,
+  region: options.region,
+});
 
 const alias = await getAccountAlias(awsConfig);
 const costs = await getTotalCosts(awsConfig);

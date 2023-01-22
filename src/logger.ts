@@ -1,4 +1,13 @@
+import chalk from 'chalk';
 import ora, { Ora } from 'ora';
+
+export function printFatalError(error: string) {
+  console.error(`  
+    ${chalk.bold.redBright.underline(`Error:`)}
+    ${chalk.redBright(`${error}`)}
+  `);
+  process.exit(1);
+}
 
 let spinner: Ora | undefined;
 
