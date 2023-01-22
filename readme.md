@@ -29,20 +29,23 @@ $ aws-cost --help
   A CLI tool to perform cost analysis on your AWS account
 
   Options:
-    -V, --version            output the version number
+    -V, --version                  output the version number
 
-    -k, --access-key [key]   AWS access key
-    -s, --secret-key [key]   AWS secret key
-    -r, --region [region]    AWS region
+    -k, --access-key [key]         AWS access key
+    -s, --secret-key [key]         AWS secret key
+    -r, --region [region]          AWS region
 
-    -p, --profile [profile]  AWS profile to use (default: "default")
+    -p, --profile [profile]        AWS profile to use (default: "default")
 
-    -j, --json               Get the output as JSON
-    -s, --summary            Get only the summary without service breakdown
-    -t, --text               Get the output as plain text (no colors / tables)
+    -j, --json                     Get the output as JSON
+    -s, --summary                  Get only the summary without service breakdown
+    -t, --text                     Get the output as plain text (no colors / tables)
 
-    -v, --version            Get the version of the CLI
-    -h, --help               Get the help of the CLI
+    -S, --slack-token [token]      Slack token for the slack message
+    -C, --slack-channel [channel]  Slack channel to post the message to
+
+    -v, --version                  Get the version of the CLI
+    -h, --help                     Get the help of the CLI
 ```
 
 In order to use the CLI you can either pass the AWS credentials through the options i.e.:
@@ -149,6 +152,14 @@ aws-cost --json
 }
 ```
 </details>
+
+## Slack Integration
+
+> You can also get the output as a slack message
+
+```bash
+aws-cost --slack-token [token] --slack-channel [channel]
+```
 
 ## Note
 

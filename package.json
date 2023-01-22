@@ -1,6 +1,6 @@
 {
   "name": "aws-cost-cli",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A CLI tool to perform cost analysis on your AWS account",
   "type": "module",
   "author": {
@@ -55,6 +55,7 @@
     "commander": "^10.0.0",
     "dayjs": "^1.11.7",
     "dotenv": "^16.0.3",
+    "node-fetch": "^3.3.0",
     "ora": "^6.1.2"
   },
   "devDependencies": {

@@ -9,9 +9,7 @@ export type RawCostByService = {
   };
 };
 
-export async function getRawCostByService(
-  awsConfig: AWSConfig
-): Promise<RawCostByService> {
+export async function getRawCostByService(awsConfig: AWSConfig): Promise<RawCostByService> {
   showSpinner('Getting pricing data');
 
   const costExplorer = new AWS.CostExplorer(awsConfig);
@@ -75,9 +73,7 @@ export type TotalCosts = {
   };
 };
 
-function calculateServiceTotals(
-  rawCostByService: RawCostByService
-): TotalCosts {
+function calculateServiceTotals(rawCostByService: RawCostByService): TotalCosts {
   const totals = {
     lastMonth: 0,
     thisMonth: 0,
@@ -117,10 +113,7 @@ function calculateServiceTotals(
         thisMonthServiceTotal += price;
       }
 
-      if (
-        dateObj.isSame(startOfLast7Days, 'week') &&
-        !dateObj.isSame(startOfYesterday, 'day')
-      ) {
+      if (dateObj.isSame(startOfLast7Days, 'week') && !dateObj.isSame(startOfYesterday, 'day')) {
         last7DaysServiceTotal += price;
       }
 
