@@ -6,7 +6,10 @@ export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: 
   hideSpinner();
   console.clear();
 
-  const allServices = Object.keys(totals.totalsByService.lastMonth);
+  const totalCosts = totals.totals;
+  const serviceCosts = totals.totalsByService;
+
+  const allServices = Object.keys(serviceCosts.yesterday);
   const sortedServiceNames = allServices.sort((a, b) => b.length - a.length);
 
   const maxServiceLength =
@@ -14,10 +17,10 @@ export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: 
       return Math.max(max, service.length);
     }, 0) + 1;
 
-  const totalLastMonth = chalk.green(`$${totals.totals.lastMonth.toFixed(2)}`);
-  const totalThisMonth = chalk.green(`$${totals.totals.thisMonth.toFixed(2)}`);
-  const totalLast7Days = chalk.green(`$${totals.totals.last7Days.toFixed(2)}`);
-  const totalYesterday = chalk.bold.yellowBright(`$${totals.totals.yesterday.toFixed(2)}`);
+  const totalLastMonth = chalk.green(`$${totalCosts.lastMonth.toFixed(2)}`);
+  const totalThisMonth = chalk.green(`$${totalCosts.thisMonth.toFixed(2)}`);
+  const totalLast7Days = chalk.green(`$${totalCosts.last7Days.toFixed(2)}`);
+  const totalYesterday = chalk.bold.yellowBright(`$${totalCosts.yesterday.toFixed(2)}`);
 
   console.log('');
   console.log(`${'AWS Cost Report:'.padStart(maxServiceLength + 1)} ${chalk.bold.yellow(accountAlias)}`);
@@ -44,17 +47,11 @@ export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: 
 
   for (let service of sortedServiceNames) {
     const serviceLabel = chalk.cyan(service.padStart(maxServiceLength));
-    const lastMonthTotal = chalk.green(
-      `$${totals.totalsByService.lastMonth[service].toFixed(2)}`.padEnd(headerPadLength)
-    );
-    const thisMonthTotal = chalk.green(
-      `$${totals.totalsByService.thisMonth[service].toFixed(2)}`.padEnd(headerPadLength)
-    );
-    const last7DaysTotal = chalk.green(
-      `$${totals.totalsByService.last7Days[service].toFixed(2)}`.padEnd(headerPadLength)
-    );
+    const lastMonthTotal = chalk.green(`$${serviceCosts.lastMonth[service].toFixed(2)}`.padEnd(headerPadLength));
+    const thisMonthTotal = chalk.green(`$${serviceCosts.thisMonth[service].toFixed(2)}`.padEnd(headerPadLength));
+    const last7DaysTotal = chalk.green(`$${serviceCosts.last7Days[service].toFixed(2)}`.padEnd(headerPadLength));
     const yesterdayTotal = chalk.bold.yellowBright(
-      `$${totals.totalsByService.yesterday[service].toFixed(2)}`.padEnd(headerPadLength)
+      `$${serviceCosts.yesterday[service].toFixed(2)}`.padEnd(headerPadLength)
     );
 
     console.log(`${serviceLabel} ${lastMonthTotal} ${thisMonthTotal} ${last7DaysTotal} ${yesterdayTotal}`);
