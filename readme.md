@@ -3,7 +3,7 @@
 
 [![asciicast](https://asciinema.org/a/553356.svg?up=1)](https://asciinema.org/a/553356)
 
-## Usage
+## Insatllation
 
 Install the package globally or alternatively you can also use `npx`
 
@@ -11,11 +11,37 @@ Install the package globally or alternatively you can also use `npx`
 npm install -g aws-cost-cli
 ```
 
-In order to use the CLI, you need to pass the AWS credentials. You can either pass them through the options i.e.:
+## Usage
+
+For the simple usage, just run the command without any options. The output will be a table with the cost breakdown by service. Optionally, you can pass the following options to modify the output:
 
 ```bash
-aws-cost --access-key [key] --secret-key [secret] --region [region]
-# or use the shorthand version
+$ aws-cost --help
+
+  Usage: aws-cost [options]
+
+  A CLI tool to perform cost analysis on your AWS account
+
+  Options:
+    -V, --version            output the version number
+
+    -k, --access-key [key]   AWS access key
+    -s, --secret-key [key]   AWS secret key
+    -r, --region [region]    AWS region
+
+    -p, --profile [profile]  AWS profile to use (default: "default")
+
+    -j, --json               Get the output as JSON
+    -s, --summary            Get only the summary without service breakdown
+    -t, --text               Get the output as plain text (no colors / tables)
+
+    -v, --version            Get the version of the CLI
+    -h, --help               Get the help of the CLI
+```
+
+In order to use the CLI you can either pass the AWS credentials through the options i.e.:
+
+```bash
 aws-cost -k [key] -s [secret] -r [region]
 ```
 
@@ -117,34 +143,6 @@ aws-cost --json
 }
 ```
 </details>
-
-## Options
-
-For the simple usage, just run the command without any options. The output will be a table with the cost breakdown by service. Optionally, you can pass the following options to modify the output:
-
-```bash
-$ aws-cost --help
-
-  Usage: aws-cost [options]
-
-  A CLI tool to perform cost analysis on your AWS account
-
-  Options:
-    -V, --version            output the version number
-
-    -k, --access-key [key]   AWS access key
-    -s, --secret-key [key]   AWS secret key
-    -r, --region [region]    AWS region
-
-    -p, --profile [profile]  AWS profile to use (default: "default")
-
-    -j, --json               Get the output as JSON
-    -s, --summary            Get only the summary without service breakdown
-    -t, --text               Get the output as plain text (no colors / tables)
-
-    -v, --version            Get the version of the CLI
-    -h, --help               Get the help of the CLI
-```
 
 ## Note
 
