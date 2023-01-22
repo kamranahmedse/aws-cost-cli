@@ -70,7 +70,7 @@ aws-cost
 ```
 You will get the following output
 
-![Default Usage](./.github/images/default-usage.png)
+![Default Usage](./.github/images/default-demo.gif)
 
 ## Total Costs
 > You can also get the summary of the cost without the service breakdown
@@ -80,7 +80,7 @@ aws-cost --summary
 ```
 You will get the following output
 
-![Summary Usage](./.github/images/summary-usage.png)
+![Summary Usage](./.github/images/summary-demo.gif)
 
 ## Plain Text
 > You can also get the output as plain text
