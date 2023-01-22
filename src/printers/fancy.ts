@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import { TotalCosts } from '../cost';
-import { hideSpinner } from '../spinner';
+import { hideSpinner } from '../logger';
 
 export function printFancy(accountAlias: string, totals: TotalCosts, isSummary: boolean = false) {
   hideSpinner();
