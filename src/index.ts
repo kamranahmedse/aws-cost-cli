@@ -21,7 +21,7 @@ program
   .option('-r, --region [region]', 'AWS region', 'us-east-1')
   // Output variants
   .option('-j, --json', 'Get the output as JSON')
-  .option('-s, --summary', 'Get only the summary without service breakdown')
+  .option('-u, --summary', 'Get only the summary without service breakdown')
   .option('-t, --text', 'Get the output as plain text (no colors / tables)')
   // Slack integration
   .option('-S, --slack-token [token]', 'Token for the slack integration')
@@ -76,5 +76,5 @@ if (options.json) {
 
 // Send a notification to slack if the token and channel are provided
 if (options.slackToken && options.slackChannel) {
-  await notifySlack(alias, costs, options.slackToken, options.slackChannel);
+  await notifySlack(alias, costs, options.summary, options.slackToken, options.slackChannel);
 }

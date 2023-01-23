@@ -21,7 +21,13 @@ function formatServiceBreakdown(costs: TotalCosts): string {
   return serviceCostsYesterday.join('\n');
 }
 
-export async function notifySlack(accountAlias: string, costs: TotalCosts, slackToken: string, slackChannel: string) {
+export async function notifySlack(
+  accountAlias: string,
+  costs: TotalCosts,
+  isSummary: boolean,
+  slackToken: string,
+  slackChannel: string
+) {
   const channel = slackChannel;
 
   const totals = costs.totals;
@@ -39,12 +45,19 @@ export async function notifySlack(accountAlias: string, costs: TotalCosts, slack
 > Total Yesterday: \`$${totals.yesterday.toFixed(2)}\`
 > Total This Month: \`$${totals.thisMonth.toFixed(2)}\`
 > Total Last Month: \`$${totals.lastMonth.toFixed(2)}\`
+`;
 
+  const breakdown = `
 > *Breakdown by Service:*
 ${formatServiceBreakdown(costs)}
 `;
 
-  const response = await fetch('https://slack.com/api/chat.postMessage', {
+  let message = `${summary}`;
+  if (!isSummary) {
+    message += `${breakdown}`;
+  }
+
+  await fetch('https://slack.com/api/chat.postMessage', {
     method: 'post',
     body: JSON.stringify({
       channel,
@@ -53,7 +66,7 @@ ${formatServiceBreakdown(costs)}
           type: 'section',
           text: {
             type: 'mrkdwn',
-            text: summary,
+            text: message,
           },
         },
       ],
