@@ -3,7 +3,7 @@
 
 ![](.github/images/aws-cost.gif)
 
-## Insatllation
+## Installation
 
 Install the package globally or alternatively you can also use `npx`
 
@@ -164,6 +164,8 @@ aws-cost --slack-token [token] --slack-channel [channel]
 You will get the message on slack with the breakdown:
 
 ![Slack Usage](./.github/images/slack-usage.png)
+
+You can set up a GitHub [workflow similar to this](https://github.com/kamranahmedse/developer-roadmap/blob/c1a53cf3cc5c9b77634673754c8a5af4e83466d6/.github/workflows/aws-costs.yml#L1) which can send the daily cost breakdown to Slack.
 
 ## Note
 
