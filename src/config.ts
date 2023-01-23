@@ -44,7 +44,7 @@ export async function getAwsConfigFromOptionsOrFile(options: {
   }
 
   return {
-    credentials: await loawAwsCredentials(profile),
+    credentials: await loadAwsCredentials(profile),
     region: region,
   };
 }
@@ -53,7 +53,7 @@ export async function getAwsConfigFromOptionsOrFile(options: {
  * Loads the environment variables from the .env file
  * @param path Path to the .env file
  */
-async function loawAwsCredentials(profile: string = 'default'): Promise<AWSConfig['credentials'] | undefined> {
+async function loadAwsCredentials(profile: string = 'default'): Promise<AWSConfig['credentials'] | undefined> {
   const configFiles = await loadSharedConfigFiles();
 
   const credentialsFile = configFiles.credentialsFile;
