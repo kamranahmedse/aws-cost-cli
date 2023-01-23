@@ -38,7 +38,7 @@ $ aws-cost --help
     -p, --profile [profile]        AWS profile to use (default: "default")
 
     -j, --json                     Get the output as JSON
-    -s, --summary                  Get only the summary without service breakdown
+    -u, --summary                  Get only the summary without service breakdown
     -t, --text                     Get the output as plain text (no colors / tables)
 
     -S, --slack-token [token]      Slack token for the slack message
