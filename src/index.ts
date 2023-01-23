@@ -18,7 +18,7 @@ program
   // AWS credentials to override reading from the config files
   .option('-k, --access-key [key]', 'AWS access key')
   .option('-s, --secret-key [key]', 'AWS secret key')
-  .option('-r, --region [region]', 'AWS region')
+  .option('-r, --region [region]', 'AWS region', 'us-east-1')
   // Output variants
   .option('-j, --json', 'Get the output as JSON')
   .option('-s, --summary', 'Get only the summary without service breakdown')
