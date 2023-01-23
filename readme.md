@@ -33,7 +33,7 @@ $ aws-cost --help
 
     -k, --access-key [key]         AWS access key
     -s, --secret-key [key]         AWS secret key
-    -r, --region [region]          AWS region
+    -r, --region [region]          AWS region (default: us-east-1)
 
     -p, --profile [profile]        AWS profile to use (default: "default")
 

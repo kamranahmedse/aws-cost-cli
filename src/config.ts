@@ -25,13 +25,12 @@ export async function getAwsConfigFromOptionsOrFile(options: {
 }): Promise<AWSConfig> {
   const { profile, accessKey, secretKey, region } = options;
 
-  if (accessKey || secretKey || region) {
-    if (!accessKey || !secretKey || !region) {
+  if (accessKey || secretKey) {
+    if (!accessKey || !secretKey) {
       printFatalError(`
-      You need to provide all of the following options: 
+      You need to provide both of the following options: 
         ${chalk.bold('--access-key')}
         ${chalk.bold('--secret-key')}
-        ${chalk.bold('--region')}
       `);
     }
 
@@ -44,26 +43,31 @@ export async function getAwsConfigFromOptionsOrFile(options: {
     };
   }
 
-  const awsConfig = await loadAwsConfig(profile);
-
-  return awsConfig;
+  return {
+    credentials: await loawAwsCredentials(profile),
+    region: region,
+  };
 }
 
 /**
  * Loads the environment variables from the .env file
  * @param path Path to the .env file
  */
-export async function loadAwsConfig(profile: string = 'default'): Promise<AWSConfig | undefined> {
+async function loawAwsCredentials(profile: string = 'default'): Promise<AWSConfig['credentials'] | undefined> {
   const configFiles = await loadSharedConfigFiles();
 
   const credentialsFile = configFiles.credentialsFile;
-  const configFile = configFiles.configFile;
 
   const accessKey: string = credentialsFile?.[profile]?.aws_access_key_id;
   const secretKey: string = credentialsFile?.[profile]?.aws_secret_access_key;
-  const region: string = configFile?.[profile]?.region;
 
-  if (!accessKey || !secretKey || !region) {
+  // Fixing the region to us-east-1 since Cost Explorer only supports this region
+  // https://docs.aws.amazon.com/general/latest/gr/billing.html#billing-cur
+  // https://github.com/kamranahmedse/aws-cost-cli/issues/1
+  // const configFile = configFiles.configFile;
+  // const region: string = configFile?.[profile]?.region;
+
+  if (!accessKey || !secretKey) {
     const sharedCredentialsFile = process.env.AWS_SHARED_CREDENTIALS_FILE || '~/.aws/credentials';
     const sharedConfigFile = process.env.AWS_CONFIG_FILE || '~/.aws/config';
 
@@ -87,10 +91,7 @@ export async function loadAwsConfig(profile: string = 'default'): Promise<AWSCon
   }
 
   return {
-    credentials: {
-      accessKeyId: accessKey,
-      secretAccessKey: secretKey,
-    },
-    region: region,
+    accessKeyId: accessKey,
+    secretAccessKey: secretKey,
   };
 }
