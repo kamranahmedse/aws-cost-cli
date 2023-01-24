@@ -13,6 +13,7 @@ export type AWSConfig = {
   credentials: {
     accessKeyId: string;
     secretAccessKey: string;
+    sessionToken: string;
   };
   region: string;
 };
@@ -21,9 +22,10 @@ export async function getAwsConfigFromOptionsOrFile(options: {
   profile: string;
   accessKey: string;
   secretKey;
+  sessionToken;
   region: string;
 }): Promise<AWSConfig> {
-  const { profile, accessKey, secretKey, region } = options;
+  const { profile, accessKey, secretKey, sessionToken, region } = options;
 
   if (accessKey || secretKey) {
     if (!accessKey || !secretKey) {
@@ -38,6 +40,7 @@ export async function getAwsConfigFromOptionsOrFile(options: {
       credentials: {
         accessKeyId: accessKey,
         secretAccessKey: secretKey,
+        sessionToken: sessionToken
       },
       region: region,
     };
@@ -60,6 +63,7 @@ async function loadAwsCredentials(profile: string = 'default'): Promise<AWSConfi
 
   const accessKey: string = credentialsFile?.[profile]?.aws_access_key_id;
   const secretKey: string = credentialsFile?.[profile]?.aws_secret_access_key;
+  const sessionToken: string = credentialsFile?.[profile]?.aws_session_token;
 
   // Fixing the region to us-east-1 since Cost Explorer only supports this region
   // https://docs.aws.amazon.com/general/latest/gr/billing.html#billing-cur
@@ -93,5 +97,6 @@ async function loadAwsCredentials(profile: string = 'default'): Promise<AWSConfi
   return {
     accessKeyId: accessKey,
     secretAccessKey: secretKey,
+    sessionToken: sessionToken,
   };
 }
