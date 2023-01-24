@@ -18,6 +18,7 @@ program
   // AWS credentials to override reading from the config files
   .option('-k, --access-key [key]', 'AWS access key')
   .option('-s, --secret-key [key]', 'AWS secret key')
+  .option('-t, --session-Token [key]', 'AWS session Token')
   .option('-r, --region [region]', 'AWS region', 'us-east-1')
   // Output variants
   .option('-j, --json', 'Get the output as JSON')
@@ -35,6 +36,7 @@ type OptionsType = {
   // AWS credentials to override reading from the config files
   accessKey: string;
   secretKey: string;
+  sessionToken: string;
   region: string;
   // AWS profile to use
   profile: string;
@@ -60,6 +62,7 @@ const awsConfig = await getAwsConfigFromOptionsOrFile({
   profile: options.profile,
   accessKey: options.accessKey,
   secretKey: options.secretKey,
+  sessionToken: options.sessionToken,
   region: options.region,
 });
 
