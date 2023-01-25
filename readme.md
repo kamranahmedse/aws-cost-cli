@@ -188,5 +188,7 @@ Regarding the credentials, you need to have the following permissions in order t
 }
 ```
 
+Also, please note that this tool uses AWS Cost Explorer under the hood which [costs $0.01 per request](https://aws.amazon.com/aws-cost-management/aws-cost-explorer/pricing/).
+
 ## License
 MIT &copy; [Kamran Ahmed](https://twitter.com/kamranahmedse)
