@@ -1,6 +1,6 @@
 {
   "name": "aws-cost-cli",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "A CLI tool to perform cost analysis on your AWS account",
   "type": "module",
   "author": {
@@ -49,6 +49,8 @@
   },
   "homepage": "https://github.com/kamranahmedse/aws-cost-cli#readme",
   "dependencies": {
+    "@aws-sdk/client-sso": "^3.332.0",
+    "@aws-sdk/credential-providers": "^3.332.0",
     "@aws-sdk/shared-ini-file-loader": "^3.254.0",
     "aws-sdk": "^2.1299.0",
     "chalk": "^5.2.0",

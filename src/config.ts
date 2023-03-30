@@ -1,4 +1,6 @@
 import fs from 'node:fs';
+import { SSOClient } from "@aws-sdk/client-sso";
+import { fromSSO } from "@aws-sdk/credential-providers";
 import { loadSharedConfigFiles } from '@aws-sdk/shared-ini-file-loader';
 import chalk from 'chalk';
 import { printFatalError } from './logger';
@@ -21,13 +23,12 @@ export type AWSConfig = {
 export async function getAwsConfigFromOptionsOrFile(options: {
   profile: string;
   accessKey: string;
-  secretKey;
-  sessionToken;
+  secretKey: string;
+  sessionToken: string;
   region: string;
 }): Promise<AWSConfig> {
   const { profile, accessKey, secretKey, sessionToken, region } = options;
-
-  if (accessKey || secretKey) {
+  if (accessKey || secretKey) { 
     if (!accessKey || !secretKey) {
       printFatalError(`
       You need to provide both of the following options: 
@@ -46,11 +47,19 @@ export async function getAwsConfigFromOptionsOrFile(options: {
     };
   }
 
-  return {
-    credentials: await loadAwsCredentials(profile),
-    region: region,
-  };
+  try {
+    return {
+      credentials: await loadSsoAwsCredentials(profile, region),
+      region: region,
+    };
+  } catch (error) {
+    return {
+      credentials: await loadAwsCredentials(profile),
+      region: region,
+    };
+  }
 }
+
 
 /**
  * Loads the environment variables from the .env file
@@ -100,3 +109,22 @@ async function loadAwsCredentials(profile: string = 'default'): Promise<AWSConfi
     sessionToken: sessionToken,
   };
 }
+
+async function loadSsoAwsCredentials(profile: string = 'default', region: string = 'eu-west-1'): Promise<AWSConfig['credentials']> {
+    const awsCredentials = fromSSO({
+      profile: profile,
+    });
+
+
+    const credentials = await awsCredentials();
+    const accessKeyId = credentials['accessKeyId'];
+    const secretAccessKey = credentials['secretAccessKey'];
+    const sessionToken = credentials['sessionToken'];
+
+    return {
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        sessionToken: sessionToken,
+
+    };
+  }
