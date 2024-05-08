@@ -62,6 +62,15 @@ aws-cost
 
 To configure the credentials using aws-cli, have a look at the [aws-cli docs](https://github.com/aws/aws-cli#configuration) for more information.
 
+### Docker
+
+You can build this Dockerfile using the docker build command and then run a container from the built image. For example:
+
+```
+docker build -t aws-cost-cli .
+docker run aws-cost-cli
+```
+
 ## Detailed Breakdown
 > The default usage is to get the cost breakdown by service
 
