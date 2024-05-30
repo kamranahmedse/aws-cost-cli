@@ -50,3 +50,7 @@ export function printPlainText(accountAlias: string, totals: TotalCosts, isSumma
     console.log(`    ${service}: $${serviceTotals.yesterday[service].toFixed(2)}`);
   });
 }
+
+if (process.env.NODE_ENV === 'test') {
+  module.exports = { printPlainSummary };
+}
