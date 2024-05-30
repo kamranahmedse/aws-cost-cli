@@ -24,7 +24,7 @@
     "predev": "run-s clean",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "aws",
@@ -59,8 +59,16 @@
     "ora": "^6.1.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.24.6",
+    "@babel/preset-env": "^7.24.6",
+    "@babel/preset-typescript": "^7.24.6",
+    "@types/jest": "^29.5.12",
     "@types/node": "^18.11.18",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "js-with-babel": "link:ts-jest/presets/js-with-babel",
     "npm-run-all": "^4.1.5",
+    "ts-jest": "^29.1.4",
     "ts-node": "^10.9.1",
     "tsup": "^6.5.0",
     "typescript": "^4.9.4"
