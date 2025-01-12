@@ -1,6 +1,6 @@
 {
   "name": "aws-cost-cli",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "A CLI tool to perform cost analysis on your AWS account",
   "type": "module",
   "author": {

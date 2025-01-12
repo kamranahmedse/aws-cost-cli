@@ -157,6 +157,10 @@ aws-cost --json
 
 > You can also get the output as a slack message
 
+You will need to create [a slack app](https://api.slack.com/apps?new_app=1), visit the **OAuth & Permissions** tab, and add the `chat:write` and `chat:write.public` scopes. Then create an OAuth token from the "OAuth Tokens" section and pass it to the CLI.
+
+> **Note:** The `--slack-channel` is the [channel id](https://stackoverflow.com/questions/40940327/what-is-the-simplest-way-to-find-a-slack-team-id-and-a-channel-id#answer-44883343), not the name.
+
 ```bash
 aws-cost --slack-token [token] --slack-channel [channel]
 ```

@@ -57,7 +57,7 @@ ${formatServiceBreakdown(costs)}
     message += `${breakdown}`;
   }
 
-  await fetch('https://slack.com/api/chat.postMessage', {
+  const response = await fetch('https://slack.com/api/chat.postMessage', {
     method: 'post',
     body: JSON.stringify({
       channel,
@@ -76,4 +76,13 @@ ${formatServiceBreakdown(costs)}
       Authorization: `Bearer ${slackToken}`,
     },
   });
+
+  const data = (await response.json()) as { ok: boolean; error?: string };
+  if (!data.ok) {
+    const message = data.error || 'Unknown error';
+    console.error(`\nFailed to send message to Slack: ${message}`);
+    process.exit(1);
+  }
+
+  console.log('\nSuccessfully sent message to Slack');
 }

@@ -22,7 +22,7 @@ program
   // AWS credentials to override reading from the config files
   .option('-k, --access-key [key]', 'AWS access key')
   .option('-s, --secret-key [key]', 'AWS secret key')
-  .option('-t, --session-Token [key]', 'AWS session Token')
+  .option('-T, --session-token [key]', 'AWS session Token')
   .option('-r, --region [region]', 'AWS region', 'us-east-1')
   // Output variants
   .option('-j, --json', 'Get the output as JSON')
@@ -32,7 +32,6 @@ program
   .option('-S, --slack-token [token]', 'Token for the slack integration')
   .option('-C, --slack-channel [channel]', 'Channel to which the slack integration should post')
   // Other options
-  .option('-v, --version', 'Get the version of the CLI')
   .option('-h, --help', 'Get the help of the CLI')
   .parse(process.argv);
 
@@ -71,6 +70,7 @@ const awsConfig = await getAwsConfigFromOptionsOrFile({
 });
 
 const alias = await getAccountAlias(awsConfig);
+
 const costs = await getTotalCosts(awsConfig);
 
 if (options.json) {
