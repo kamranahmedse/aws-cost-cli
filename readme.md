@@ -51,7 +51,7 @@ $ aws-cost --help
 In order to use the CLI you can either pass the AWS credentials through the options i.e.:
 
 ```bash
-aws-cost -k [key] -s [secret] -r [region]
+aws-cost -p [profile] -k [key] -s [secret] -r [region]
 ```
 
 or if you have configured the credentials using [aws-cli](https://github.com/aws/aws-cli), you can simply run the following command:
@@ -81,6 +81,14 @@ You will get the following output
 
 ![Default Usage](./.github/images/default-demo.gif)
 
+## SSO login 
+
+In order to be able to use aws-cost within organization, you can first login with CLI, then run the command with the profile you want.
+
+```bash
+aws sso login --profile [profile]  
+aws-cost -p [profile]
+```
 ## Total Costs
 > You can also get the summary of the cost without the service breakdown
 
