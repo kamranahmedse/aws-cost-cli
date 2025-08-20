@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import { loadSharedConfigFiles } from '@aws-sdk/shared-ini-file-loader';
+import { loadSharedConfigFiles } from '@smithy/shared-ini-file-loader';
 import chalk from 'chalk';
 import { printFatalError } from './logger';
 
@@ -10,10 +10,10 @@ export type EnvConfig = {
 };
 
 export type AWSConfig = {
-  credentials: {
+  credentials?: {
     accessKeyId: string;
     secretAccessKey: string;
-    sessionToken: string;
+    sessionToken?: string;
   };
   region: string;
 };
@@ -40,7 +40,7 @@ export async function getAwsConfigFromOptionsOrFile(options: {
       credentials: {
         accessKeyId: accessKey,
         secretAccessKey: secretKey,
-        sessionToken: sessionToken
+        ...(sessionToken && { sessionToken })
       },
       region: region,
     };
@@ -97,6 +97,6 @@ async function loadAwsCredentials(profile: string = 'default'): Promise<AWSConfi
   return {
     accessKeyId: accessKey,
     secretAccessKey: secretKey,
-    sessionToken: sessionToken,
+    ...(sessionToken && { sessionToken }),
   };
 }
