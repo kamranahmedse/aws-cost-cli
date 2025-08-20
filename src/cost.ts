@@ -1,4 +1,4 @@
-import AWS from 'aws-sdk';
+import { CostExplorerClient, GetCostAndUsageCommand } from '@aws-sdk/client-cost-explorer';
 import dayjs from 'dayjs';
 import { AWSConfig } from './config';
 import { showSpinner } from './logger';
@@ -12,46 +12,48 @@ export type RawCostByService = {
 export async function getRawCostByService(awsConfig: AWSConfig): Promise<RawCostByService> {
   showSpinner('Getting pricing data');
 
-  const costExplorer = new AWS.CostExplorer(awsConfig);
+  const costExplorer = new CostExplorerClient(awsConfig);
   const endDate = dayjs().subtract(1, 'day');
   const startDate = endDate.subtract(65, 'day');
 
   // Get the cost and usage data for the specified account
-  const pricingData = await costExplorer
-    .getCostAndUsage({
-      TimePeriod: {
-        Start: startDate.format('YYYY-MM-DD'),
-        End: endDate.format('YYYY-MM-DD'),
-      },
-      Granularity: 'DAILY',
-      Filter: {
-        Not: {
-          Dimensions: {
-            Key: 'RECORD_TYPE',
-            Values: ['Credit', 'Refund', 'Upfront', 'Support'],
-          },
+  const getCostAndUsageCommand = new GetCostAndUsageCommand({
+    TimePeriod: {
+      Start: startDate.format('YYYY-MM-DD'),
+      End: endDate.format('YYYY-MM-DD'),
+    },
+    Granularity: 'DAILY',
+    Filter: {
+      Not: {
+        Dimensions: {
+          Key: 'RECORD_TYPE',
+          Values: ['Credit', 'Refund', 'Upfront', 'Support'],
         },
       },
-      Metrics: ['UnblendedCost'],
-      GroupBy: [
-        {
-          Type: 'DIMENSION',
-          Key: 'SERVICE',
-        },
-      ],
-    })
-    .promise();
+    },
+    Metrics: ['UnblendedCost'],
+    GroupBy: [
+      {
+        Type: 'DIMENSION',
+        Key: 'SERVICE',
+      },
+    ],
+  });
+  
+  const pricingData = await costExplorer.send(getCostAndUsageCommand);
 
   const costByService = {};
 
-  for (const day of pricingData.ResultsByTime) {
-    for (const group of day.Groups) {
-      const serviceName = group.Keys[0];
-      const cost = group.Metrics.UnblendedCost.Amount;
-      const costDate = day.TimePeriod.End;
+  for (const day of pricingData.ResultsByTime || []) {
+    for (const group of day.Groups || []) {
+      const serviceName = group.Keys?.[0];
+      const cost = group.Metrics?.UnblendedCost?.Amount;
+      const costDate = day.TimePeriod?.End;
 
-      costByService[serviceName] = costByService[serviceName] || {};
-      costByService[serviceName][costDate] = parseFloat(cost);
+      if (serviceName && cost && costDate) {
+        costByService[serviceName] = costByService[serviceName] || {};
+        costByService[serviceName][costDate] = parseFloat(cost);
+      }
     }
   }
 
